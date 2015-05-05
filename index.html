@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Fun with FabricJS Filters</title>
+    <link rel="stylesheet" href="css/master.css">
+    <style>
+    pre {
+        margin-left: 15px !important;
+    }
+    </style>
+    <style>
+    #progress_bar {
+        margin: 10px 0;
+        padding: 3px;
+        border: 1px solid #000;
+        font-size: 14px;
+        clear: both;
+        opacity: 0;
+        -moz-transition: opacity 1s linear;
+        -o-transition: opacity 1s linear;
+        -webkit-transition: opacity 1s linear;
+    }
+    
+    #progress_bar.loading {
+        opacity: 1.0;
+    }
+    
+    #progress_bar .percent {
+        background-color: #99ccff;
+        height: auto;
+        width: 0;
+    }
+    </style>
+    <!--[if lt IE 9]>
+      <script src="js/excanvas.js"></script>
+    <![endif]-->
+    <script src="js/fabric.js"></script>
+    <script src="js/master.js"></script>
+    <script src="js/CanvasToPNG.js"></script>
+</head>
+
+<body>
+    <div id="bd-wrapper">
+        <h2>Fun With FabricJS! Image Filters</h2>
+        <style>
+        .controls {
+            display: inline-block;
+            background: #fafafa;
+            margin-left: 10px;
+            padding: 15px;
+            border-left: 1px dotted #aaa;
+        }
+        
+        .canvas-container {
+            display: inline-block;
+            vertical-align: top;
+        }
+        
+        input[disabled] {
+            opacity: 0.5;
+        }
+        
+        #bd-wrapper {
+            min-width: 1600px;
+        }
+        </style>
+        <canvas id="c" width="600" height="600"></canvas>
+        <div class="controls">
+            <h3>Filters:</h3>
+            <p>
+                <label><span>Grayscale:</span>
+                    <input type="checkbox" id="grayscale" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Invert:</span>
+                    <input type="checkbox" id="invert" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Sepia:</span>
+                    <input type="checkbox" id="sepia" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Sepia2:</span>
+                    <input type="checkbox" id="sepia2" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Remove white:</span>
+                    <input type="checkbox" id="remove-white" disabled>
+                </label>
+                <br>
+                <label>Threshold:
+                    <input type="range" id="remove-white-threshold" value="60" min="0" max="255" disabled>
+                </label>
+                <br>
+                <label>Distance:
+                    <input type="range" id="remove-white-distance" value="10" min="0" max="255" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Brightness:</span>
+                    <input type="checkbox" id="brightness" disabled>
+                </label>
+                <br>
+                <label>Value:
+                    <input type="range" id="brightness-value" value="100" min="0" max="255" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Noise:</span>
+                    <input type="checkbox" id="noise" disabled>
+                </label>
+                <br>
+                <label>Value:
+                    <input type="range" id="noise-value" value="100" min="0" max="1000" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>GradientTransparency:</span>
+                    <input type="checkbox" id="gradient-transparency" disabled>
+                </label>
+                <br>
+                <label>Value:
+                    <input type="range" id="gradient-transparency-value" value="100" min="0" max="255" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Pixelate</span>
+                    <input type="checkbox" id="pixelate" disabled>
+                </label>
+                <br>
+                <label>Value:
+                    <input type="range" id="pixelate-value" value="4" min="2" max="20" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Blur:</span>
+                    <input type="checkbox" id="blur" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Sharpen:</span>
+                    <input type="checkbox" id="sharpen" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Emboss:</span>
+                    <input type="checkbox" id="emboss" disabled>
+                </label>
+            </p>
+            <p>
+                <label><span>Tint:</span>
+                    <input type="checkbox" id="tint" disabled>
+                </label>
+                <br>
+                <label>Color:
+                    <input type="color" id="tint-color" value="">
+                </label>
+                <br>
+                <label>Opacity:
+                    <input type="range" id="tint-opacity" min="0" max="1" value="1" step="0.1">
+                </label>
+                <br>
+            </p>
+            <p>
+                <label><span>Save PNG:</span>
+                    <input type="button" id="saveToPNG" disabled>
+                </label>
+            </p>
+            <p>
+                <input type="file" id="files3" name="files3[]" multiple="">
+                <div id="progress_bar">
+                    <div class="percent">0%</div>
+                </div>
+            </p>
+        </div>
+        <script src="main.js"></script>
+    </div>
+    <script>
+    (function() {
+        fabric.util.addListener(fabric.window, 'load', function() {
+            var canvas = this.__canvas || this.canvas,
+                canvases = this.__canvases || this.canvases;
+
+            canvas && canvas.calcOffset && canvas.calcOffset();
+
+            if (canvases && canvases.length) {
+                for (var i = 0, len = canvases.length; i < len; i++) {
+                    canvases[i].calcOffset();
+                }
+            }
+        });
+    })();
+    </script>
+</body>
+
+</html>
